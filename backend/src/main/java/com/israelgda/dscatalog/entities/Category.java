@@ -20,15 +20,15 @@ public class Category implements Serializable{
 	private Long id;
 	
 	@Column(name= "name", nullable = false )
-	private String nome;
+	private String name;
 	
 	public Category() {
 		
 	}
 	
-	public Category(Long id, String nome) {
+	public Category(Long id, String name) {
 		this.id = id;
-		this.nome = nome;
+		this.name = name;
 	}
 
 	public Long getId() {
@@ -39,12 +39,12 @@ public class Category implements Serializable{
 		this.id = id;
 	}
 
-	public String getNome() {
-		return nome;
+	public String getname() {
+		return name;
 	}
 
-	public void setNome(String nome) {
-		this.nome = nome;
+	public void setname(String name) {
+		this.name = name;
 	}
 
 	@Override
