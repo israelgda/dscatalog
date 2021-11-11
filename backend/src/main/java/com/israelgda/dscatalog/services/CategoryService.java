@@ -34,6 +34,22 @@ public class CategoryService {
 		return listDTO;
 	}
 	
+	@Transactional
+	public CategoryDTO create(CategoryDTO categoryDTO) {
+		Category category = dtoToEntity(categoryDTO);
+		category = repository.save(category);
+		CategoryDTO result = entityToDTO(category);
+		return result;
+	}
+	
+	
+	//Métodos Internos
+	private Category dtoToEntity(CategoryDTO categoryDTO) {
+		Category category = new Category();
+		category.setName(categoryDTO.getName());
+		return category;
+	}
+
 	private CategoryDTO entityToDTO(Category category) {
 		CategoryDTO result = new CategoryDTO(category);
 		return result;
