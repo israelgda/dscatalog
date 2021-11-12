@@ -1,13 +1,13 @@
 package com.israelgda.dscatalog.services;
 
-import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 import javax.persistence.EntityNotFoundException;
 
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.dao.EmptyResultDataAccessException;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -34,11 +34,11 @@ public class CategoryService {
 	}
 
 	@Transactional(readOnly = true)
-	public List<CategoryDTO> findAll() {
-		List<CategoryDTO> listDTO = listToDTO(repository.findAll());
-		return listDTO;
+	public Page<CategoryDTO> findAllPaged(PageRequest pageRequest) {
+		Page<Category> listDTO = repository.findAll(pageRequest);
+		return listDTO.map(x-> new CategoryDTO(x));
 	}
-	
+
 	@Transactional
 	public CategoryDTO create(CategoryDTO categoryDTO) {
 		Category category = dtoToEntity(categoryDTO);
@@ -74,11 +74,6 @@ public class CategoryService {
 		category.setId(categoryDTO.getId());
 		category.setName(categoryDTO.getName());
 		return category;
-	}
-
-	private List<CategoryDTO> listToDTO(List<Category> list) {
-		List<CategoryDTO> result = list.stream().map(x -> new CategoryDTO(x)).collect(Collectors.toList());
-		return result;
 	}
 	
 	private Category updateCategory(CategoryDTO categoryDTO, Category newCategory) {
