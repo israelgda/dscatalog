@@ -11,8 +11,11 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.israelgda.dscatalog.dto.CategoryDTO;
 import com.israelgda.dscatalog.dto.ProductDTO;
+import com.israelgda.dscatalog.entities.Category;
 import com.israelgda.dscatalog.entities.Product;
+import com.israelgda.dscatalog.repositories.CategoryRepository;
 import com.israelgda.dscatalog.repositories.ProductRepository;
 import com.israelgda.dscatalog.services.exceptions.DataBaseException;
 import com.israelgda.dscatalog.services.exceptions.ResourceNotFoundException;
@@ -21,9 +24,12 @@ import com.israelgda.dscatalog.services.exceptions.ResourceNotFoundException;
 public class ProductService {
 
 	private final ProductRepository repository;
+	
+	private final CategoryRepository categoryRepository;
 
-	public ProductService(ProductRepository repository) {
+	public ProductService(ProductRepository repository, CategoryRepository categoryRepository) {
 		this.repository = repository;
+		this.categoryRepository = categoryRepository;
 	}
 
 	@Transactional(readOnly = true)
@@ -71,23 +77,34 @@ public class ProductService {
 	//Métodos Internos
 	private Product dtoToEntity(ProductDTO productDTO) {
 		Product product = new Product();
-		product.setId(productDTO.getId());
 		product.setName(productDTO.getName());
 		product.setDescription(productDTO.getDescription());
 		product.setPrice(productDTO.getPrice());
 		product.setImgUrl(productDTO.getImgUrl());
 		product.setDate(productDTO.getDate());
 		
+		product.getCategories().clear();
+		for(CategoryDTO catDto: productDTO.getCategories()) {
+			Category category = categoryRepository.getOne(catDto.getId());
+			product.getCategories().add(category);
+		}
+		
 		return product;
 	}
 	
 	private Product updateProduct(ProductDTO productDTO, Product newProduct) {
-		newProduct.setId(productDTO.getId());
 		newProduct.setName(productDTO.getName());
 		newProduct.setDescription(productDTO.getDescription());
 		newProduct.setPrice(productDTO.getPrice());
 		newProduct.setImgUrl(productDTO.getImgUrl());
 		newProduct.setDate(productDTO.getDate());
+		
+		newProduct.getCategories().clear();
+		for(CategoryDTO catDto: productDTO.getCategories()) {
+			Category category = categoryRepository.getOne(catDto.getId());
+			newProduct.getCategories().add(category);
+		}
+		
 		return newProduct;
 	}
 
