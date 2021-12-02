@@ -120,9 +120,11 @@ public class ProductResourceTests {
 	@Test
 	public void findAllPagedShouldReturnPage() throws Exception{
 		
+	
 		ResultActions result = 
 				mockMvc.perform(get("/products")
 							.accept(MediaType.APPLICATION_JSON));
+
 		
 		result.andExpect(status().isOk());
 	}

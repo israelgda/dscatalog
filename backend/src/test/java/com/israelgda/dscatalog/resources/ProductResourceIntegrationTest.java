@@ -20,7 +20,6 @@ import com.israelgda.dscatalog.dto.ProductDTO;
 import com.israelgda.dscatalog.tests.Factory;
 
 @SpringBootTest
-@AutoConfigureMockMvc
 @Transactional
 public class ProductResourceIntegrationTest {
 	
