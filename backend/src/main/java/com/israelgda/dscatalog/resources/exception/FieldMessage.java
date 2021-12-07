@@ -2,25 +2,25 @@ package com.israelgda.dscatalog.resources.exception;
 
 public class FieldMessage {
 
-	private String fieldlName;
+	private String fieldName;
 	private String message;
 	
 	public FieldMessage() {
 		
 	}
 
-	public FieldMessage(String fieldlName, String message) {
+	public FieldMessage(String fieldName, String message) {
 		super();
-		this.fieldlName = fieldlName;
+		this.fieldName = fieldName;
 		this.message = message;
 	}
 
 	public String getFieldlName() {
-		return fieldlName;
+		return fieldName;
 	}
 
 	public void setFieldlName(String fieldlName) {
-		this.fieldlName = fieldlName;
+		this.fieldName = fieldlName;
 	}
 
 	public String getMessage() {
