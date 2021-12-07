@@ -15,7 +15,7 @@ public class FieldMessage {
 		this.message = message;
 	}
 
-	public String getFieldlName() {
+	public String getFieldName() {
 		return fieldName;
 	}
 
